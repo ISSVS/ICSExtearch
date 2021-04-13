@@ -1,5 +1,5 @@
 $ExtensionDictionary = @{
-    "rdb"="relay configuration files"
+    "rdb" = "relay configuration files"
     "exp"="RTAC project file"
     "hprb"="RTAC HMI Configuration"
     "selaprj"="Architect project file"
@@ -10,13 +10,15 @@ $ExtensionDictionary = @{
     "prj"="Potential Control Builder project file"
     "rcd"="RTU560 configuration"
     "rtu"="RTU560 configuration"
-    "SYS_BASCOM.COM"="ABB SYS600 Base System Configuration file"
+    "SYS_BASCOM"="ABB SYS600 Base System Configuration file"
     "pcmp"="ABB configuration project"
     "pcmi"="ABB PCM600 IEC File"
     "pcmt"="ABB PCM600 Template IED File"
     "spj"="Motorola ACE project file"
     "plz"="Motorola ACE compiled library"
-    "adb, opt, out, prp"="Motorola ACE Application"
+    "adb"="Motorola ACE Application"
+    "opt"="Motorola ACE Application"
+    "prp"="Motorola ACE Application"
     "scl"="Substation Configuration Language (IEC 61850)"
     "icd"="Substation Configuration Language (IEC 61850)"
     "ied"="Substation Configuration Language (IEC 61850)"
@@ -25,11 +27,6 @@ $ExtensionDictionary = @{
     "ssd"="System Specification Description (IEC 61850)"
     "ctz"="Unknown"
     "ap12"="Number is version of TIA Portal"
-    "ap13"="Number is version of TIA Portal"
-    "ap14"="Number is version of TIA Portal"
-    "ap15"="Number is version of TIA Portal"
-    "ap16"="Number is version of TIA Portal"
-    "ap17"="Number is version of TIA Portal"
     "conf"="Unknown"
     "gz"="Unknown"
     "urs"="GE UR settings file"
@@ -73,17 +70,23 @@ $ExtensionDictionary = @{
     "gss"="PROFINET General Station Description (spanish)"
     "gsd"="PROFINET General Station Description"
 }
+$IncludeExtensions = ""
 
-$FilesDictionary = Get-ChildItem -Path "C:\Users","C:\Program Files" -recurse -Include *.png,*.jpg -ErrorAction SilentlyContinue  | Select -ExpandProperty Fullname
+$ExtensionDictionary.GetEnumerator() | ForEach-Object {
+    $IncludeExtensions += "*.$($_.Key)," 
+}
+ 
+$IncludeExtensions = $IncludeExtensions.Substring(0,$IncludeExtensions.Length-1)
 
-$results = @{}
+Write-Host $IncludeExtensions
+
+$FilesDictionary = Get-ChildItem -Path "C:\Users","C:\Program Files" -recurse -Include *.bkp,*.gsf,*.trc,*.hprb,*.arj,*.s7f,*.icd,*.selaprj,*.ssnet,*.rdb,*.gsp,*.lic,*.ekb,*.prp,*.out,*.spj,*.pcmi,*.sim,*.m6b,*.ssd,*.cv4,*.scl,*.gz,*.ap12,*.ini,*.license,*.prj,*.apa,*.plz,*.pcmt,*.ncz,*.gss,*.mwp,*.s7p,*.conf,*.gsg,*.pt2,*.SYS_BASCOM,*.paf,*.rtu,*.eas,*.opt,*.pl,*.rcd,*.scd,*.hmb,*.gsi,*.ctz,*.v,*.ncd,*.pcmp,*.s5d,*.gse,*.cin,*.l5x,*.ied,*.l5k,*.gsd,*.cfg,*.cid,*.xml,*.adb,*.syl,*.tcw,*.pc5,*.exp,*.dtq,*.urs,*.vstax,*.xrf -ErrorAction SilentlyContinue  | Select -ExpandProperty Fullname
+
 foreach ($F in $FilesDictionary.GetEnumerator()) {
     foreach ($E in $ExtensionDictionary.GetEnumerator()) {
         if ($F.split(".")[-1] -eq $E.Name)
         {
             Write-Host "$($F) :$($E.Value)"
-            #$results.Add($F, $E.Value)
         }
     }
 }
-#$results | Export-Csv -Path Files.csv
