@@ -1,2 +1,2 @@
 # ICSExtearch
-ICS Files Extension Search on Windows Supervisory Systems
+Powershell script to search ICS File Extensions on Windows Supervisory Systems
