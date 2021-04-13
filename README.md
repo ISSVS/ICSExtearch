@@ -1,2 +1,2 @@
 # ICSExtearch
-ICS Files Extesion Search on Windows Systems
+ICS Files Extension Search on Windows Supervisory Systems
